@@ -28,8 +28,23 @@ from sticker import (add_text, add_text_at, encode_gif, encode_webp, make_sticke
 
 ROOT = Path(__file__).resolve().parent
 PORT = int(os.environ.get("PORT", os.environ.get("GRADIO_SERVER_PORT", "7870")))
-OUT = ROOT / "out"
-OUT.mkdir(exist_ok=True)
+def _out_dir() -> Path:
+    """输出目录：优先程序旁的 out/；云端只读时退回临时目录。"""
+    cand = ROOT / "out"
+    try:
+        cand.mkdir(exist_ok=True)
+        probe = cand / ".w"
+        probe.write_bytes(b"1")
+        probe.unlink()
+        return cand
+    except Exception:
+        import tempfile
+        d = Path(tempfile.gettempdir()) / "sticker_out"
+        d.mkdir(exist_ok=True)
+        return d
+
+
+OUT = _out_dir()
 ASSETS = ROOT / "assets"
 
 EFFECTS = {
