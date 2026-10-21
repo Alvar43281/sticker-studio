@@ -82,14 +82,30 @@ main{height:calc(100vh - 53px);display:flex;flex-direction:column}
   <iframe id="iframe" src="http://127.0.0.1:7870/?tab=emblem" allow="clipboard-write"></iframe>
 </main>
 <script>
-  const f = document.getElementById('iframe');
-  const tip = document.getElementById('tip');
-  let loaded = false;
-  f.addEventListener('load', () => { loaded = true; tip.style.display = 'none'; });
-  setTimeout(() => { if (!loaded) tip.style.display = 'block'; }, 4000);
-  // 允许用 ?app=http://ip:port 覆盖地址
-  const q = new URLSearchParams(location.search).get('app');
-  if (q) { f.src = q + '/?tab=emblem'; }
+(function () {
+  var f = document.getElementById('iframe');
+  var tip = document.getElementById('tip');
+  var bar = document.getElementById('bar');
+  var TAB = 'emblem';
+  var LOCAL = 'http://127.0.0.1:7870';
+  var DEMO = window.DEMO_URL || 'https://modelscope.cn/studios/Alvar4318/sticker_studio';
+  var q = new URLSearchParams(location.search).get('app');
+  var isLocal = ['127.0.0.1', 'localhost', ''].indexOf(location.hostname) >= 0;
+  var base = q || (isLocal ? LOCAL : '');
+  if (!base) {
+    f.style.display = 'none';
+    tip.style.display = 'none';
+    bar.insertAdjacentHTML('beforeend',
+      '<a href="' + DEMO + '" target="_blank" rel="noopener" ' +
+      'style="margin-left:auto;color:#6ea8fe">打开在线版 ↗</a>' +
+      '<span style="margin-left:12px;color:#9aa3b2">静态预览：上方是示例，完整程序见在线版或本地运行</span>');
+    return;
+  }
+  var loaded = false;
+  f.addEventListener('load', function () { loaded = true; tip.style.display = 'none'; });
+  f.src = base + '/?tab=' + TAB;
+  setTimeout(function () { if (!loaded) tip.style.display = 'block'; }, 8000);
+})();
 </script>
 </body>
 </html>

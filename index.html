@@ -64,6 +64,19 @@ pre{background:#0e1016;border:1px solid var(--line);border-radius:12px;
   font-family:Consolas,monospace}
 footer{padding:44px 0;text-align:center;color:var(--sub);font-size:12.5px;
   border-top:1px solid var(--line)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.fx{background:var(--panel);border:1px solid var(--line);border-radius:13px;
+  padding:9px;text-align:center;transition:.2s}
+.fx:hover{border-color:rgba(179,136,255,.5);transform:translateY(-3px)}
+.fx img{width:100%;border-radius:9px;display:block;background:#fff}
+.fx b{display:block;margin-top:8px;font-size:13px}
+.fx span{font-size:11px;color:var(--sub);display:block;line-height:1.4}
+.mod img{aspect-ratio:1/1;height:auto}
+.cta{display:inline-block;margin-top:18px;padding:11px 26px;border-radius:12px;
+  font-size:14.5px;color:#0b0c10;background:linear-gradient(120deg,#6ea8fe,#b388ff);
+  font-weight:700;transition:.2s}
+.cta:hover{transform:translateY(-2px);filter:brightness(1.08)}
 </style>
 </head>
 <body>
@@ -91,32 +104,75 @@ footer{padding:44px 0;text-align:center;color:var(--sub);font-size:12.5px;
     <h2>功能入口</h2>
     <p class="lead">点击进入对应功能页，页面内嵌真实程序。</p>
     <div class="mods">
-      <a class="mod" href="fn_cutout.html"><div class="no">01</div>
+      <a class="mod" href="fn_cutout.html"><img src="assets/ex5_cutout.png" alt="抠图示例" loading="lazy"><div class="no">01</div>
         <h3>抠图</h3>
         <p>去背景 → 透明 PNG，可附白底/深色底</p>
         <span class="go">进入 →</span>
       </a>
-      <a class="mod" href="fn_sticker.html"><div class="no">02</div>
+      <a class="mod" href="fn_sticker.html"><img src="assets/ex5_sticker.png" alt="贴纸示例" loading="lazy"><div class="no">02</div>
         <h3>贴纸</h3>
         <p>抠图 + 描边 + 配文 + 动效</p>
         <span class="go">进入 →</span>
       </a>
-      <a class="mod" href="fn_emblem.html"><div class="no">03</div>
+      <a class="mod" href="fn_emblem.html"><img src="assets/emblem_still.png" alt="徽记示例" loading="lazy"><div class="no">03</div>
         <h3>徽记</h3>
         <p>图标粒子汇聚 + 辉光 + 扫光</p>
         <span class="go">进入 →</span>
       </a>
-      <a class="mod" href="fn_sequence.html"><div class="no">04</div>
+      <a class="mod" href="fn_sequence.html"><img src="assets/ex5_sequence.png" alt="序列示例" loading="lazy"><div class="no">04</div>
         <h3>序列</h3>
         <p>多图按顺序播放 + 倒计时</p>
         <span class="go">进入 →</span>
       </a>
-      <a class="mod" href="fn_video.html"><div class="no">05</div>
+      <a class="mod" href="fn_video.html"><img src="assets/ex5_video.webp" alt="视频转 GIF 示例" loading="lazy"><div class="no">05</div>
         <h3>视频转 GIF</h3>
         <p>短视频截片段转 GIF</p>
         <span class="go">进入 →</span>
       </a>
     </div>
+  </div>
+</section>
+
+
+<section id="fx">
+  <div class="wrap">
+    <h2>19 种动效</h2>
+    <p class="lead">
+      主体动效 9 种（跟着主体跑）、特殊 1 种（旋转悬浮）、画面动效 9 种（作用在整帧上）。
+      <b>全部由程序生成，不依赖任何外部素材。</b>另外还能选「无」——只出一张静态透明 PNG。
+    </p>
+    <div class="grid">
+      <div class="fx"><img src="assets/fx_shake.webp" alt="抖动" loading="lazy"><b>抖动</b><span>正弦位移 + 微旋</span></div>
+      <div class="fx"><img src="assets/fx_bounce.webp" alt="弹跳" loading="lazy"><b>弹跳</b><span>纵向弹起 + 压扁</span></div>
+      <div class="fx"><img src="assets/fx_punch.webp" alt="冲击" loading="lazy"><b>冲击</b><span>回弹缓动放大</span></div>
+      <div class="fx"><img src="assets/fx_wobble.webp" alt="摇摆" loading="lazy"><b>摇摆</b><span>绕轴往复旋转</span></div>
+      <div class="fx"><img src="assets/fx_breathe.webp" alt="呼吸" loading="lazy"><b>呼吸</b><span>缓慢缩放</span></div>
+      <div class="fx"><img src="assets/fx_jelly.webp" alt="果冻" loading="lazy"><b>果冻</b><span>逐行正弦位移场</span></div>
+      <div class="fx"><img src="assets/fx_glow.webp" alt="流光" loading="lazy"><b>流光</b><span>外发光 + 扫光</span></div>
+      <div class="fx"><img src="assets/fx_trail.webp" alt="残影" loading="lazy"><b>残影</b><span>帧缓冲衰减</span></div>
+      <div class="fx"><img src="assets/fx_burst.webp" alt="崩解" loading="lazy"><b>崩解</b><span>边缘粒子飞散</span></div>
+      <div class="fx"><img src="assets/fx_rotate.webp" alt="旋转悬浮" loading="lazy"><b>旋转悬浮</b><span>自转 + 投影</span></div>
+      <div class="fx"><img src="assets/fx_kenburns.webp" alt="肯·伯恩斯" loading="lazy"><b>肯·伯恩斯</b><span>缓慢推镜</span></div>
+      <div class="fx"><img src="assets/fx_wave.webp" alt="波浪扭曲" loading="lazy"><b>波浪扭曲</b><span>正弦位移场</span></div>
+      <div class="fx"><img src="assets/fx_glitch.webp" alt="故障" loading="lazy"><b>故障</b><span>通道错位 + 撕裂</span></div>
+      <div class="fx"><img src="assets/fx_bokeh.webp" alt="光斑漂移" loading="lazy"><b>光斑漂移</b><span>虚化光斑漂浮</span></div>
+      <div class="fx"><img src="assets/fx_kaleido.webp" alt="万花筒" loading="lazy"><b>万花筒</b><span>极坐标镜像</span></div>
+      <div class="fx"><img src="assets/fx_polar.webp" alt="极坐标展开" loading="lazy"><b>极坐标展开</b><span>环形展开</span></div>
+      <div class="fx"><img src="assets/fx_crt.webp" alt="CRT" loading="lazy"><b>CRT</b><span>扫描线 + 亮带</span></div>
+      <div class="fx"><img src="assets/fx_halftone.webp" alt="半调网点" loading="lazy"><b>半调网点</b><span>点径随亮度</span></div>
+      <div class="fx"><img src="assets/fx_oldfilm.webp" alt="老电影" loading="lazy"><b>老电影</b><span>颗粒 + 划痕 + 闪烁</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="try">
+  <div class="wrap" style="text-align:center">
+    <h2>在线体验</h2>
+    <p class="lead">五个功能都能直接在浏览器里跑，不用装任何东西。</p>
+    <a class="cta" href="https://modelscope.cn/studios/Alvar4318/sticker_studio" target="_blank" rel="noopener">打开在线版 →</a>
+    <p style="color:var(--sub);font-size:12.5px;margin-top:14px">
+      文字位置、描边、动效都可以在结果出来之后反复微调。
+    </p>
   </div>
 </section>
 
