@@ -39,7 +39,7 @@ def _find_ffmpeg() -> str:
 
 
 _FONT_DIR = Path(__file__).resolve().parent / "fonts"
-_NOTO = str(_FONT_DIR / "NotoSansCJKsc-Bold.otf")
+_NOTO = str(_FONT_DIR / "NotoSansSC-Bold.otf")
 
 
 def _pick_font(cands):
