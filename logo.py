@@ -29,9 +29,12 @@ def alpha_for_emblem(img: np.ndarray) -> np.ndarray:
     暗底 + 亮线是徽记的典型形态，亮度法反而更准。
     """
     from sticker import cutout
-    a = cutout(img)
-    if float(a.mean()) > 0.03 and float((a > 0.5).mean()) > 0.02:
-        return a
+    try:
+        a = cutout(img)
+        if float(a.mean()) > 0.03 and float((a > 0.5).mean()) > 0.02:
+            return a
+    except Exception:
+        pass
 
     g = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY).astype(np.float32)
     h, w = g.shape

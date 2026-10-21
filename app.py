@@ -12,6 +12,7 @@
 启动：python app.py  →  http://127.0.0.1:7870
 """
 
+import os
 import time
 from pathlib import Path
 
@@ -26,6 +27,7 @@ from sticker import (add_text, add_text_at, encode_gif, encode_webp, make_sticke
                      render_frames, robust_alpha, trim)
 
 ROOT = Path(__file__).resolve().parent
+PORT = int(os.environ.get("PORT", os.environ.get("GRADIO_SERVER_PORT", "7870")))
 OUT = ROOT / "out"
 OUT.mkdir(exist_ok=True)
 ASSETS = ROOT / "assets"
@@ -230,6 +232,13 @@ footer{display:none !important}
 
 
 
+_GR_MAJOR = 0
+try:
+    _GR_MAJOR = int(gr.__version__.split(".")[0])
+except Exception:
+    pass
+
+
 def _port_free(port: int) -> bool:
     import socket
     s = socket.socket()
@@ -254,7 +263,10 @@ def _select_tab(request: gr.Request):
 
 
 def build_ui():
-    with gr.Blocks(title="贴纸工坊", css=CSS) as demo:
+    blocks_kw = {"title": "贴纸工坊"}
+    if _GR_MAJOR < 6:
+        blocks_kw["css"] = CSS          # Gradio 5 及以前：css 属于 Blocks
+    with gr.Blocks(**blocks_kw) as demo:
         gr.Markdown("# 贴纸工坊", elem_id="title")
         gr.Markdown("抠图 · 贴纸 · 动效 · 序列 · 视频转 GIF", elem_id="subtitle")
 
@@ -331,9 +343,13 @@ def build_ui():
 
 
 if __name__ == "__main__":
-    if not _port_free(7870):
-        raise SystemExit("端口 7870 已被占用 —— 先关掉旧的实例再启动。")
+    # 云端由平台注入 PORT，本地默认 7870
+    if not os.environ.get("PORT") and not _port_free(PORT):
+        raise SystemExit(f"端口 {PORT} 已被占用 —— 先关掉旧的实例再启动。")
     app = build_ui()
     app.queue(default_concurrency_limit=1)
-    app.launch(server_name="0.0.0.0", server_port=7870, show_error=True,
-               theme=gr.themes.Soft())
+    launch_kw = dict(server_name="0.0.0.0", server_port=PORT, show_error=True,
+                     theme=gr.themes.Soft())
+    if _GR_MAJOR >= 6:
+        launch_kw["css"] = CSS                  # Gradio 6：css 挪到了 launch()
+    app.launch(**launch_kw)

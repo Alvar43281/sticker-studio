@@ -38,19 +38,33 @@ def _find_ffmpeg() -> str:
         return "ffmpeg"
 
 
-FONT_BOLD = [
+_FONT_DIR = Path(__file__).resolve().parent / "fonts"
+_NOTO = str(_FONT_DIR / "NotoSansCJKsc-Bold.otf")
+
+
+def _pick_font(cands):
+    """把第一台存在的中文字体提到 [0]，下游都用 FONT_BOLD[0]。"""
+    for c in cands:
+        if Path(c).exists():
+            return [c] + [x for x in cands if x != c]
+    return list(cands)
+
+
+FONT_BOLD = _pick_font([
     r"C:\Windows\Fonts\msyhbd.ttc",
     r"C:\Windows\Fonts\simhei.ttf",
+    _NOTO,                      # 随包携带（Linux 云主机用，开源 OFL 授权）
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
     "/usr/share/fonts/truetype/noto/NotoSansCJK-Bold.ttc",
     "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-]
-FONT_REG = [
+])
+FONT_REG = _pick_font([
     r"C:\Windows\Fonts\msyh.ttc",
     r"C:\Windows\Fonts\simhei.ttf",
+    _NOTO,
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
     "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-]
+])
 
 
 def _resolve_seg_model() -> str:
@@ -77,6 +91,9 @@ def _ensure_model(path: str) -> str:
     """模型不存在时尝试从 HuggingFace 拉取（云端首次启动用）。"""
     if Path(path).exists():
         return path
+    # 默认不联网拉模型：装不上模型的环境直接走传统分割，避免首屏等待
+    if os.environ.get("SEG_AUTO_DOWNLOAD", "0") != "1":
+        return path
     try:
         from huggingface_hub import hf_hub_download
         fp = hf_hub_download("skytnt/anime-seg", "isnetis.onnx")
@@ -89,14 +106,22 @@ def _session():
     global _seg
     if _seg is None:
         import onnxruntime as ort
-        _seg = ort.InferenceSession(_ensure_model(SEG_MODEL),
-                                    providers=["CPUExecutionProvider"])
-    return _seg
+        try:
+            path = _ensure_model(SEG_MODEL)
+            if not Path(path).exists():
+                _seg = False
+            else:
+                _seg = ort.InferenceSession(path, providers=["CPUExecutionProvider"])
+        except Exception:
+            _seg = False
+    return _seg or None
 
 
 def cutout(img: np.ndarray) -> np.ndarray:
-    """返回 0~1 的 alpha。"""
+    """返回 0~1 的 alpha。模型不可用时自动退回传统分割，保证任何环境都能直接跑。"""
     sess = _session()
+    if sess is None:
+        return robust_alpha(img)
     h, w = img.shape[:2]
     x = cv2.resize(img, (1024, 1024), interpolation=cv2.INTER_LINEAR).astype(np.float32) / 255.0
     x = (x - 0.5) / 0.5
