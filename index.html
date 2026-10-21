@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>贴纸工坊</title>
+<style>
+
+:root{--bg:#0b0c10;--panel:#14161d;--panel2:#1a1d26;--text:#eef1f7;
+  --sub:#9aa3b2;--line:#252a36;--accent:#6ea8fe;--accent2:#b388ff;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);line-height:1.7;
+  font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:6px;
+  padding:10px 20px;background:rgba(11,12,16,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{font-weight:700;letter-spacing:1px;margin-right:14px;
+  background:linear-gradient(120deg,#fff,var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.nav a.lnk{padding:6px 12px;border-radius:9px;font-size:13.5px;color:var(--sub);
+  border:1px solid transparent;transition:.2s}
+.nav a.lnk:hover{color:var(--text);background:var(--panel);border-color:var(--line)}
+.nav a.lnk.on{color:var(--accent);background:rgba(110,168,254,.12);
+  border-color:rgba(110,168,254,.35)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+section{padding:62px 0;border-top:1px solid var(--line)}
+.hero-media{width:250px;margin:20px auto 0;background:transparent;border:0}
+.hero-media img{display:block;width:100%;background:transparent}
+
+
+h2{font-size:25px;margin:0 0 8px}
+.lead{color:var(--sub);margin:0 0 30px;font-size:15px}
+.lead b{color:var(--text)}
+
+.hero{padding:76px 0 54px;text-align:center;
+  background:radial-gradient(900px 420px at 50% -10%,rgba(110,168,254,.18),transparent 60%),
+  radial-gradient(700px 380px at 82% 8%,rgba(179,136,255,.14),transparent 60%)}
+.badge{display:inline-block;padding:5px 14px;border-radius:999px;font-size:12px;
+  color:var(--accent);border:1px solid rgba(110,168,254,.35);
+  background:rgba(110,168,254,.08);letter-spacing:2px}
+h1{font-size:50px;margin:16px 0 8px;letter-spacing:2px;
+  background:linear-gradient(120deg,#fff 20%,var(--accent) 60%,var(--accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--sub);font-size:16px;margin:0 auto 26px;max-width:560px}
+.stats{display:flex;justify-content:center;gap:38px;flex-wrap:wrap;margin-top:26px}
+.stat b{display:block;font-size:25px;color:var(--accent)}
+.stat span{font-size:12.5px;color:var(--sub)}
+.mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.mod{display:block;background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid var(--line);border-radius:18px;padding:20px;transition:.25s}
+.mod:hover{transform:translateY(-4px);border-color:rgba(110,168,254,.5)}
+.mod img{width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:12px;margin-bottom:12px;background:#fff;display:block}
+.mod .no{font-size:11.5px;color:var(--accent);letter-spacing:1.5px}
+.mod h3{margin:4px 0 6px;font-size:17px}
+.mod p{margin:0;color:var(--sub);font-size:13px}
+.mod .go{display:inline-block;margin-top:12px;font-size:12.5px;color:var(--accent)}
+.note{background:rgba(110,168,254,.07);border:1px solid rgba(110,168,254,.22);
+  border-radius:12px;padding:14px 16px;color:var(--sub);font-size:13.5px}
+.note b{color:var(--text)}
+pre{background:#0e1016;border:1px solid var(--line);border-radius:12px;
+  padding:14px 16px;overflow:auto;font-size:13px;color:#c9d3e4;
+  font-family:Consolas,monospace}
+footer{padding:44px 0;text-align:center;color:var(--sub);font-size:12.5px;
+  border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">贴纸工坊</span>
+  <a class="lnk on" href="index.html" class="on">首页</a>
+  <a class="lnk" href="fn_cutout.html">抠图</a>
+  <a class="lnk" href="fn_sticker.html">贴纸</a>
+  <a class="lnk" href="fn_emblem.html">徽记</a>
+  <a class="lnk" href="fn_sequence.html">序列</a>
+  <a class="lnk" href="fn_video.html">视频转 GIF</a>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="badge">课程设计 · 图像处理与动效</div>
+    <h1>贴纸工坊</h1>
+    <p>五个独立功能，点进去就能直接用。全部本地运行。</p>
+    <div class="hero-media"><img src="assets/nugget_spin.webp" alt="旋转悬浮"></div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>功能入口</h2>
+    <p class="lead">点击进入对应功能页，页面内嵌真实程序。</p>
+    <div class="mods">
+      <a class="mod" href="fn_cutout.html"><div class="no">01</div>
+        <h3>抠图</h3>
+        <p>去背景 → 透明 PNG，可附白底/深色底</p>
+        <span class="go">进入 →</span>
+      </a>
+      <a class="mod" href="fn_sticker.html"><div class="no">02</div>
+        <h3>贴纸</h3>
+        <p>抠图 + 描边 + 配文 + 动效</p>
+        <span class="go">进入 →</span>
+      </a>
+      <a class="mod" href="fn_emblem.html"><div class="no">03</div>
+        <h3>徽记</h3>
+        <p>图标粒子汇聚 + 辉光 + 扫光</p>
+        <span class="go">进入 →</span>
+      </a>
+      <a class="mod" href="fn_sequence.html"><div class="no">04</div>
+        <h3>序列</h3>
+        <p>多图按顺序播放 + 倒计时</p>
+        <span class="go">进入 →</span>
+      </a>
+      <a class="mod" href="fn_video.html"><div class="no">05</div>
+        <h3>视频转 GIF</h3>
+        <p>短视频截片段转 GIF</p>
+        <span class="go">进入 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">贴纸工坊 · 本地图像处理与动效工具　|　素材仅用于课程作业演示</div>
+</footer>
+</body>
+</html>

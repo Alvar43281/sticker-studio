@@ -1,0 +1,7 @@
+﻿gradio==6.30.0
+opencv-python-headless
+numpy
+pillow
+onnxruntime
+imageio-ffmpeg
+huggingface_hub

@@ -1,0 +1,22 @@
+# 环境
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# 模型（体积大，不入库）
+models/
+*.onnx
+
+# 产物
+out/
+artifacts/
+*.gif
+*.webp
+*.mp4
+!assets/*.gif
+!assets/*.webp
+
+# 系统
+.DS_Store
+Thumbs.db

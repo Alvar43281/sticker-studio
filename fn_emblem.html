@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>徽记 · 贴纸工坊</title>
+<style>
+
+:root{--bg:#0b0c10;--panel:#14161d;--panel2:#1a1d26;--text:#eef1f7;
+  --sub:#9aa3b2;--line:#252a36;--accent:#6ea8fe;--accent2:#b388ff;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);line-height:1.7;
+  font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:6px;
+  padding:10px 20px;background:rgba(11,12,16,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{font-weight:700;letter-spacing:1px;margin-right:14px;
+  background:linear-gradient(120deg,#fff,var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.nav a.lnk{padding:6px 12px;border-radius:9px;font-size:13.5px;color:var(--sub);
+  border:1px solid transparent;transition:.2s}
+.nav a.lnk:hover{color:var(--text);background:var(--panel);border-color:var(--line)}
+.nav a.lnk.on{color:var(--accent);background:rgba(110,168,254,.12);
+  border-color:rgba(110,168,254,.35)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+section{padding:62px 0;border-top:1px solid var(--line)}
+h2{font-size:25px;margin:0 0 8px}
+.lead{color:var(--sub);margin:0 0 30px;font-size:15px}
+.lead b{color:var(--text)}
+
+body{overflow:hidden}
+main{height:calc(100vh - 53px);display:flex;flex-direction:column}
+#bar{display:flex;align-items:center;gap:12px;padding:8px 20px;
+  border-bottom:1px solid var(--line);font-size:13px;color:var(--sub);
+  background:var(--panel)}
+#bar b{color:var(--text)}
+#bar a{color:var(--accent)}
+#tip{margin:14px 20px;padding:12px 16px;border-radius:12px;font-size:13.5px;
+  background:rgba(255,120,120,.08);border:1px solid rgba(255,120,120,.3);
+  color:#ffb3b3;display:none}
+#iframe{flex:1;width:100%;border:0;background:#0f1116}
+.loading{position:absolute;inset:53px 0 0 0;display:flex;align-items:center;
+  justify-content:center;color:var(--sub);font-size:14px;pointer-events:none}
+
+#demo{display:flex;align-items:center;gap:14px;padding:10px 20px;
+  border-bottom:1px solid var(--line);background:var(--panel2)}
+#demo img{height:110px;width:110px;object-fit:contain;border-radius:12px;background:#fff}
+#demo span{font-size:12.8px;color:var(--sub)}
+#demo b{color:var(--text);font-size:13.2px;display:block;margin-bottom:2px}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">贴纸工坊</span>
+  <a class="lnk" href="index.html">首页</a>
+  <a class="lnk" href="fn_cutout.html">抠图</a>
+  <a class="lnk" href="fn_sticker.html">贴纸</a>
+  <a class="lnk on" href="fn_emblem.html" class="on">徽记</a>
+  <a class="lnk" href="fn_sequence.html">序列</a>
+  <a class="lnk" href="fn_video.html">视频转 GIF</a>
+</nav>
+
+<main>
+  <div id="bar">
+    <b>徽记</b>
+    <span>图标粒子汇聚 + 轮廓辉光 + 扫光定型</span>
+    <span style="margin-left:auto">
+      <a href="http://127.0.0.1:7870/?tab=emblem" target="_blank">在新窗口打开 ↗</a>
+    </span>
+  </div>
+  <div id="tip">
+    连不上本地程序（http://127.0.0.1:7870）。请先启动：<br>
+    <code>cd D:\agent\poster-studio</code><br>
+    <code>..\sequence-evolver\.venv\Scripts\python.exe app.py</code>
+  </div>
+  <div id="demo">
+    <img src="assets/emblem_still.png" alt="">
+    <span><b>这个功能在做什么</b>示例 · 徽记：粒子汇聚后定型</span>
+  </div>
+  <iframe id="iframe" src="http://127.0.0.1:7870/?tab=emblem" allow="clipboard-write"></iframe>
+</main>
+<script>
+  const f = document.getElementById('iframe');
+  const tip = document.getElementById('tip');
+  let loaded = false;
+  f.addEventListener('load', () => { loaded = true; tip.style.display = 'none'; });
+  setTimeout(() => { if (!loaded) tip.style.display = 'block'; }, 4000);
+  // 允许用 ?app=http://ip:port 覆盖地址
+  const q = new URLSearchParams(location.search).get('app');
+  if (q) { f.src = q + '/?tab=emblem'; }
+</script>
+</body>
+</html>
